@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="Hexo 博客部署指南：博客从本地搬到互联网" />
+    <meta name="hexo-theme-A4" content="v2.0.1" />
+    <link rel="alternate icon" type="image/webp" href="/blog/img/favicon.svg">
+    <title>Jo&#39;s blog | Side notes from my everyday</title>
+
+    
+        
+<link rel="stylesheet" href="/blog/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/blog/css/reset.css">
+
+        
+<link rel="stylesheet" href="/blog/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/blog/css/fonts.css">
+
+         <!--注意：首页既不是post也不是page-->
+        
+
+        
+<link rel="stylesheet" href="/blog/css/ui.css">
+
+        
+<link rel="stylesheet" href="/blog/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/blog/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/blog/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/blog/css/toc.css">
+
+        
+    
+
+    
+
+    
+<link rel="stylesheet" href="/blog/css/lightgallery-bundle.min.css">
+
+
+    
+        
+<link rel="stylesheet" href="/blog/css/custom.css">
+
+    
+
+    
+
+    <!-- <link rel="stylesheet" href="https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/LXGWWenKai-Regular/result.css" /> -->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@chinese-fonts/lxgwwenkai@3.0.0/dist/LXGWWenKai-Regular/result.css' /> 
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    
+    
+        <style>
+            .index-main{
+                max-width:  880px;
+            }
+        </style>
+
+    
+    
+
+
+
+    
+
+    
+    
+
+
+
+
+    
+    
+
+
+    <body>
+        
+        <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.80/darkreader.min.js"></script>
+        <script>
+            const drOptions = {
+                brightness: 100,
+                contrast: 95,
+                sepia: 10,
+                darkSchemeTextColor: '#e0e0e0',  // 粉笔白文字
+                darkSchemeBackgroundColor: '#1e1e1e', // 黑板灰背景
+                scrollbarStyle: 'native'
+            };
+
+            const savedTheme = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                DarkReader.enable(drOptions);
+            }
+
+            window.addEventListener('DOMContentLoaded', () => {
+                const btn = document.createElement('button');
+                btn.innerText = '🌓';
+                // 按钮样式：仿照你之前的布局，放在右下角
+                btn.style.cssText = `
+                    position: fixed; 
+                    bottom: 40px; 
+                    left: 42px; 
+                    z-index: 9999;
+                    width: 44px; 
+                    height: 44px; 
+                    border-radius: 50%; 
+                    border: 1px solid #ccc;
+                    background: #f7f5ed; 
+                    color: #000;
+                    font-size: 22px; 
+                    cursor: pointer;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+                    transition: transform 0.2s, background-color 0.3s;
+                `;
+                // 根据当前状态初始化按钮颜色
+                if (DarkReader.isEnabled()) {
+                    btn.style.backgroundColor = '#1e1e1e';
+                    btn.style.color = '#fff';
+                }
+                btn.onmouseover = () => btn.style.transform = 'scale(1.1)';
+                btn.onmouseout = () => btn.style.transform = 'scale(1)';
+                document.body.appendChild(btn);
+                // 点击切换逻辑
+                btn.addEventListener('click', () => {
+                    if (DarkReader.isEnabled()) {
+                        DarkReader.disable();
+                        localStorage.setItem('theme', 'light');
+                        btn.style.backgroundColor = '#f7f5ed';
+                        btn.style.color = '#000';
+                    } else {
+                        DarkReader.enable(drOptions);
+                        localStorage.setItem('theme', 'dark');
+                        btn.style.backgroundColor = '#1e1e1e';
+                        btn.style.color = '#fff';
+                    }
+                });
+            });
+        </script>
+        
+        
+            
+                <div class="left-toc-container">
+                    <nav id="toc" class="bs-docs-sidebar"></nav>
+                </div>
+            
+        
+        <div class="paper">
+
+            
+
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <style>
+            .header-img {
+                width: 56px;
+                height: auto;
+                object-fit: cover; /* 保持图片比例 */
+                transition: transform 0.3s ease-in-out; 
+                border-radius: 0; 
+            }
+            
+        </style>
+        <img 
+            alt="^-^" 
+            cache-control="max-age=86400" 
+            class="header-img" 
+            src="/blog/img/favicon.svg" 
+        />
+        <div class="header-content">
+            <a class="logo" href="/blog/">Jo&#39;s blog</a> 
+            <span class="description">Notes to self, made public.</span> 
+        </div>
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/blog/">首页</a></li>
+            
+        
+            
+                <li><a href="/blog/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/blog/about/">关于</a></li>
+            
+        
+            
+                <li><a href="/blog/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/blog/categories/">分类</a></li>
+            
+        
+    </ul>
+</div>
+
+                    
+                    
+
+                    
+                    
+
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    Hexo 博客部署指南：博客从本地搬到互联网
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2026-07-05</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：1.7k</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：6分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%89%8D%E8%A8%80"><span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87"><span class="post-toc-text">一、前置准备</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BA%8C%E3%80%81%E5%9C%A8-GitHub-%E4%B8%8A%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="post-toc-text">二、在 GitHub 上创建仓库</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%BB%93%E5%BA%93%E5%90%8D%E5%AF%B9%E8%AE%BF%E9%97%AE%E5%9C%B0%E5%9D%80%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="post-toc-text">仓库名对访问地址的影响</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2%E6%8F%92%E4%BB%B6"><span class="post-toc-text">三、安装部署插件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%9B%9B%E3%80%81%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="post-toc-text">四、修改配置文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-1-%E4%BF%AE%E6%94%B9-URL-%E9%83%A8%E5%88%86"><span class="post-toc-text">4.1 修改 URL 部分</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-2-%E4%BF%AE%E6%94%B9-Deploy-%E9%83%A8%E5%88%86"><span class="post-toc-text">4.2 修改 Deploy 部分</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BA%94%E3%80%81%E9%85%8D%E7%BD%AE-Git-%E8%BA%AB%E4%BB%BD%E4%BF%A1%E6%81%AF"><span class="post-toc-text">五、配置 Git 身份信息</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%85%AD%E3%80%81%E6%89%A7%E8%A1%8C%E9%83%A8%E7%BD%B2"><span class="post-toc-text">六、执行部署</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-1-%E8%AE%A4%E8%AF%81%E9%97%AE%E9%A2%98"><span class="post-toc-text">6.1 认证问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-2-%E6%9B%B4%E6%8E%A8%E8%8D%90%E7%9A%84%E5%81%9A%E6%B3%95%EF%BC%9ASSH-%E5%85%8D%E5%AF%86%E9%83%A8%E7%BD%B2"><span class="post-toc-text">6.2 更推荐的做法：SSH 免密部署</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-3-%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98"><span class="post-toc-text">6.3 网络连接问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%83%E3%80%81%E5%BC%80%E5%90%AF-GitHub-Pages"><span class="post-toc-text">七、开启 GitHub Pages</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%85%AB%E3%80%81%E8%AE%BF%E9%97%AE%E4%BD%A0%E7%9A%84%E5%8D%9A%E5%AE%A2"><span class="post-toc-text">八、访问你的博客</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B9%9D%E3%80%81%E4%BB%A5%E5%90%8E%E6%80%8E%E4%B9%88%E6%9B%B4%E6%96%B0%E5%8D%9A%E5%AE%A2"><span class="post-toc-text">九、以后怎么更新博客</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%8D%81%E3%80%81%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="post-toc-text">十、踩坑记录</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="post-toc-text">写在最后</span></a></li></ol>
+            
+        
+        <div class=".article-gallery"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本地跑起来的博客只有自己能看，部署到线上才算真正”开张”。本文记录了 Hexo 博客部署到 GitHub 的完整过程。部署完成后，你会获得一个 <code>https://你的用户名.github.io/仓库名/</code> 的公开网址，任何人都能访问。</p>
+<h2 id="一、前置准备"><a href="#一、前置准备" class="headerlink" title="一、前置准备"></a>一、前置准备</h2><p>在开始部署之前，确保你已经完成以下准备：</p>
+<ul>
+<li><strong>GitHub 账号</strong>：去 <a target="_blank" rel="noopener" href="https://github.com/">github.com</a> 注册，用户名会出现在博客地址里，建议选一个满意的</li>
+<li><strong>本地 Hexo 博客已跑通</strong>：<code>hexo s</code> 能在 <code>localhost:4000</code> 正常预览</li>
+<li><strong>Git 已安装</strong>：命令行输入 <code>git --version</code> 能显示版本号</li>
+</ul>
+<h2 id="二、在-GitHub-上创建仓库"><a href="#二、在-GitHub-上创建仓库" class="headerlink" title="二、在 GitHub 上创建仓库"></a>二、在 GitHub 上创建仓库</h2><p>登录 GitHub 后，点击右上角 <code>+</code> 号，选择 <code>New repository</code>。</p>
+<p>关键要求：</p>
+<ul>
+<li><strong>Repository name</strong>：可以任意取，比如取名叫 <code>blog</code></li>
+<li>选择 <strong>Public</strong>（公开），否则 Pages 无法正常访问</li>
+<li>不要勾选 “Add a README file”，创建一个空仓库即可</li>
+</ul>
+<p>创建完成后，仓库页面会显示一个地址，把它记下来：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/你的用户名/blog.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="仓库名对访问地址的影响"><a href="#仓库名对访问地址的影响" class="headerlink" title="仓库名对访问地址的影响"></a>仓库名对访问地址的影响</h3><p>这里有一个细节需要注意：如果仓库名是任意的（比如 <code>blog</code>），访问地址会带子路径：</p>
+<p><code>https://yi-fn.github.io/blog/</code></p>
+<h2 id="三、安装部署插件"><a href="#三、安装部署插件" class="headerlink" title="三、安装部署插件"></a>三、安装部署插件</h2><p>Hexo 本身不知道怎么把文件推送到 GitHub，需要一个插件来帮忙。在博客根目录下执行，如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d D:\你的博客路径\myblog</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>安装成功后会显示 <code>added X packages</code>，说明插件就绪了。</p>
+<h2 id="四、修改配置文件"><a href="#四、修改配置文件" class="headerlink" title="四、修改配置文件"></a>四、修改配置文件</h2><p>打开博客根目录下的 <code>_config.yml</code>，需要改两个地方。</p>
+<h3 id="4-1-修改-URL-部分"><a href="#4-1-修改-URL-部分" class="headerlink" title="4.1 修改 URL 部分"></a>4.1 修改 URL 部分</h3><p>往下翻找到 <code># URL</code> 这一段。需要设置 <code>url</code> ：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://你的用户名.github.io/仓库名/</span></span><br></pre></td></tr></table></figure>
+
+<p>比如我的仓库名是 <code>blog</code>，就写成：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">url:</span> <span class="string">https://yi-fn.github.io/blog/</span></span><br></pre></td></tr></table></figure>
+
+<p>这一步非常关键。如果漏掉 <code>/blog</code>，部署后网页里的 CSS、图片等资源路径会全部 404，页面变成一堆没有样式的裸文字。</p>
+<h3 id="4-2-修改-Deploy-部分"><a href="#4-2-修改-Deploy-部分" class="headerlink" title="4.2 修改 Deploy 部分"></a>4.2 修改 Deploy 部分</h3><p>找到文件最底部的 <code># Deployment</code>，改成：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/你的用户名/仓库名.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<p>注意几个 YAML 格式要点：</p>
+<ul>
+<li>冒号后面必须有一个空格</li>
+<li><code>type</code>、<code>repo</code>、<code>branch</code> 缩进对齐，用空格不要用 Tab</li>
+<li><code>branch</code> 填 <code>main</code>（GitHub 现在默认主分支是 main）</li>
+</ul>
+<h2 id="五、配置-Git-身份信息"><a href="#五、配置-Git-身份信息" class="headerlink" title="五、配置 Git 身份信息"></a>五、配置 Git 身份信息</h2><p>第一次部署时，Git 需要知道你是谁。如果之前没有配置过，执行 <code>hexo d</code> 会报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*** Please tell me who you are.</span><br></pre></td></tr></table></figure>
+
+<p>解决办法是执行两条命令，设置全局身份信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;你的GitHub用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;你的GitHub注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个配置只需要做一次，以后所有 Git 操作都会自动带上这个身份。</p>
+<h2 id="六、执行部署"><a href="#六、执行部署" class="headerlink" title="六、执行部署"></a>六、执行部署</h2><p>一切就绪后，执行部署三连：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean      <span class="comment"># 清理旧的生成文件</span></span><br><span class="line">hexo g          <span class="comment"># 重新生成静态网页</span></span><br><span class="line">hexo d          <span class="comment"># 推送到 GitHub</span></span><br></pre></td></tr></table></figure>
+
+<p>或者连起来一次执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-1-认证问题"><a href="#6-1-认证问题" class="headerlink" title="6.1 认证问题"></a>6.1 认证问题</h3><p>因为用的是 HTTPS 地址，第一次推送时 GitHub 会要求认证。</p>
+<p>如 GitHub 不支持用登录密码推送，需要用 <strong>Personal Access Token</strong> 代替密码。</p>
+<p>生成 Token 的方法：</p>
+<ol>
+<li>GitHub → 头像 → <code>Settings</code> → 最底部 <code>Developer settings</code></li>
+<li><code>Personal access tokens</code> → <code>Tokens (classic)</code> → <code>Generate new token (classic)</code></li>
+<li>Note 随便填（比如”blog部署”），Expiration 选时间</li>
+<li>勾选 <code>repo</code> 权限（第一个大项）</li>
+<li>点 <code>Generate token</code>，立刻复制生成的令牌（只显示一次）</li>
+</ol>
+<p>部署弹窗输入：</p>
+<ul>
+<li>用户名：你的 GitHub 用户名</li>
+<li>密码：粘贴刚才的 Token</li>
+</ul>
+<h3 id="6-2-更推荐的做法：SSH-免密部署"><a href="#6-2-更推荐的做法：SSH-免密部署" class="headerlink" title="6.2 更推荐的做法：SSH 免密部署"></a>6.2 更推荐的做法：SSH 免密部署</h3><p>如果不想每次部署都输 Token，可以改用 SSH 地址。先生成 SSH 密钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;你的GitHub邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>一路回车，然后复制公钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>把内容添加到 GitHub → <code>Settings</code> → <code>SSH and GPG keys</code> → <code>New SSH key</code>。</p>
+<p>然后把 <code>_config.yml</code> 里的 <code>repo</code> 换成 SSH 格式：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:你的用户名/仓库名.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<p>注意 SSH 地址的格式是 <code>git@github.com:用户名/仓库名.git</code>，冒号后面没有斜杠。</p>
+<p>配好之后，以后每次 <code>hexo d</code> 都自动免密推送。</p>
+<h3 id="6-3-网络连接问题"><a href="#6-3-网络连接问题" class="headerlink" title="6.3 网络连接问题"></a>6.3 网络连接问题</h3><p>国内访问 GitHub 不稳定，<code>hexo d</code> 时可能遇到 <code>Failed to connect to github.com:443</code> 的报错。解决办法：</p>
+<ul>
+<li>如果开了代理工具，给 Git 配置代理：<code>git config --global http.proxy http://127.0.0.1:端口号</code></li>
+<li>或者换个网络环境重试</li>
+<li>多试几次，有时候只是临时连不上</li>
+</ul>
+<h2 id="七、开启-GitHub-Pages"><a href="#七、开启-GitHub-Pages" class="headerlink" title="七、开启 GitHub Pages"></a>七、开启 GitHub Pages</h2><p>代码推送成功后，还需要在 GitHub 上开启 Pages 服务：</p>
+<ol>
+<li>打开仓库页面，点顶部 <code>Settings</code></li>
+<li>左侧菜单找到 <code>Pages</code></li>
+<li><code>Source</code> 选择 <code>Deploy from a branch</code></li>
+<li>分支选 <code>main</code>，目录选 <code>/(root)</code></li>
+<li>点 <code>Save</code></li>
+</ol>
+<p>保存后等 1-2 分钟，页面顶部出现绿色提示 <code>Your site is live</code>，就说明网站正式上线了。</p>
+<h2 id="八、访问你的博客"><a href="#八、访问你的博客" class="headerlink" title="八、访问你的博客"></a>八、访问你的博客</h2><p>浏览器打开：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://你的用户名.github.io/仓库名/</span><br></pre></td></tr></table></figure>
+
+<p>如果看到你的博客页面，恭喜，部署成功了。</p>
+<h2 id="九、以后怎么更新博客"><a href="#九、以后怎么更新博客" class="headerlink" title="九、以后怎么更新博客"></a>九、以后怎么更新博客</h2><p>部署成功后，日常更新博客的流程非常简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 写新文章</span></span><br><span class="line">hexo new <span class="string">&quot;文章标题&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑 source/_posts/ 下的 Markdown 文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 发布上线</span></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>三条命令，文章就自动同步到线上。</p>
+<h2 id="十、踩坑记录"><a href="#十、踩坑记录" class="headerlink" title="十、踩坑记录"></a>十、踩坑记录</h2><p>部署过程中可能踩的几个坑，记录下来供参考：</p>
+<p><strong>坑一：YAML 格式错误</strong></p>
+<p>配置文件里冒号后面漏了空格，或者用了 Tab 键缩进，都会导致解析报错。YAML 对格式非常敏感，记住两条铁律：冒号后必须有空格，缩进只用空格不用 Tab。</p>
+<p><strong>坑二：资源路径 404</strong></p>
+<p>仓库名不是 <code>用户名.github.io</code> 时，忘记设置 <code>root: /仓库名/</code>，导致页面样式全丢。这是项目站点最容易踩的坑。</p>
+<p><strong>坑三：Git 身份未配置</strong></p>
+<p>新电脑上第一次用 Git，没设置 <code>user.name</code> 和 <code>user.email</code>，部署直接报错。</p>
+<p><strong>坑四：GitHub 密码认证失效</strong></p>
+<p>用登录密码推送被拒绝，需要改用 Personal Access Token 或 SSH 密钥。</p>
+<p><strong>坑五：网络连不上 GitHub</strong></p>
+<p>国内网络环境不稳定，<code>hexo d</code> 时连不上 GitHub 服务器。需要配置代理或多次重试。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>从本地搭建到部署上线，整个流程走通之后，其实就是一个固定的循环：写文章 → 三条命令 → 上线。技术门槛并不高，难的是迈出第一步和耐心解决那些报错。</p>
+<p>如果你也在搭建自己的博客，希望这篇文章能帮你少走一些弯路。</p>
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2026-07-05</span>
+            
+                <span>该篇文章被 Jo</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/blog/tags/%E6%97%A5%E5%BF%97/'>
+                            日志
+                        </a>
+                    
+                        <a href='/blog/tags/%E6%8A%80%E6%9C%AF/'>
+                            技术
+                        </a>
+                    
+                </span>
+             
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/blog/categories/%E6%8C%87%E5%8D%97/'>
+                            指南
+                        </a>
+                    
+                </span>
+            
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/blog/2026/07/03/hexo-config-guide-for-beginners/">Hexo 博客配置指南：从默认站点到个性化博客</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+
+                    
+
+                    <div class="footer">
+    
+        <span> 
+            © 2026 China 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>Welcome to Jo&#39;s blog.</span>
+            
+                <span class="footer-last-span-right"><i>本站由<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/index.html">Hexo</a>驱动｜使用<a target="_blank" rel="noopener" href="https://github.com/HiNinoJay/hexo-theme-A4">Hexo-theme-A4</a>主题</i></span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/blog/js/toc.js"></script>
+
+    
+
+    
+<script src="/blog/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/blog/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/blog/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/blog/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/blog/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/blog/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/blog/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/blog/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/blog/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/blog/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+    </body>
+</html>
+<script src="/blog/js/emojiHandler.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        wrapEmojis('.paper');
+    });
+</script>
